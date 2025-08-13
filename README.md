@@ -1,9 +1,21 @@
 # NLW Agents
 
-Aplicação fullstack desenvolvida durante o evento **NLW** da [Rocketseat](https://www.rocketseat.com.br/).  
-O projeto é composto por **backend** e **frontend** integrados, oferecendo uma base sólida para aprendizado e evolução de aplicações modernas.
+O NLW Agents é uma aplicação fullstack desenvolvida durante o evento NLW da Rocketseat, com integração entre backend e frontend para criar uma experiência dinâmica de aprendizado.
+Seu principal diferencial é o uso de Inteligência Artificial para identificar e extrair palavras-chave durante uma aula, e a partir delas responder perguntas de forma contextualizada e imediata.
+
+A solução combina tecnologias modernas com boas práticas de arquitetura, sendo ideal para explorar casos de uso de IA em ambientes educacionais ou corporativos.
 
 ---
+
+##  🔑 Destaques do Projeto
+
+IA para análise de conteúdo em tempo real: capta termos relevantes durante a aula.
+
+Respostas automáticas: gera explicações e esclarecimentos baseados no contexto capturado.
+
+Arquitetura modular: separação clara entre backend, frontend e lógica de IA.
+
+Stack moderna: tecnologias rápidas, seguras e escaláveis.
 
 ## 📦 Tecnologias Utilizadas
 
