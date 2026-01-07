@@ -1,0 +1,9 @@
+node_modules
+coverage
+.env
+*.log
+.git
+__tests__
+*.test.ts
+jest.config.ts
+tsconfig.test.json
