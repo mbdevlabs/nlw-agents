@@ -8,7 +8,10 @@
     "dev": "node --env-file .env --experimental-strip-types --no-warnings --watch src/server.ts",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
-    "db:seed": "node --env-file .env --experimental-strip-types --no-warnings src/db/seed.ts"
+    "db:seed": "node --env-file .env --experimental-strip-types --no-warnings src/db/seed.ts",
+    "test": "NODE_OPTIONS='--experimental-vm-modules' jest",
+    "test:watch": "NODE_OPTIONS='--experimental-vm-modules' jest --watch",
+    "test:coverage": "NODE_OPTIONS='--experimental-vm-modules' jest --coverage"
   },
   "keywords": [],
   "author": "",
@@ -16,9 +19,13 @@
   "description": "",
   "devDependencies": {
     "@biomejs/biome": "2.0.6",
+    "@jest/globals": "^29.7.0",
+    "@types/jest": "^29.5.14",
     "@types/node": "^24.0.10",
     "drizzle-kit": "^0.31.4",
     "drizzle-seed": "^0.3.1",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.2.5",
     "typescript": "^5.8.3",
     "ultracite": "5.0.32"
   },
