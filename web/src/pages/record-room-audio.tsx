@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react'
 import { Navigate, useParams } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
+import { API_URL } from '@/http/api'
 
 type RoomParams = {
   roomId: string
@@ -34,17 +35,14 @@ export function RecordRoomAudio() {
 
     formData.append('audio', blob, 'audio.webm')
 
-    const response = await fetch(
-      `http://localhost:3333/rooms/${params.roomId}/audio`,
-      {
-        method: 'POST',
-        body: formData,
-      }
-    )
+    const response = await fetch(`${API_URL}/rooms/${params.roomId}/audio`, {
+      method: 'POST',
+      body: formData,
+    })
 
     const result = await response.json()
 
-    // biome-ignore lint/suspicious/noConsole: <explanation>
+    // biome-ignore lint/suspicious/noConsole: debug logging for audio upload
     console.log('Audio uploaded successfully:', result)
   }
 
@@ -61,12 +59,12 @@ export function RecordRoomAudio() {
     }
 
     recorder.current.onstart = () => {
-      // biome-ignore lint/suspicious/noConsole: <explanation>
+      // biome-ignore lint/suspicious/noConsole: debug logging for audio upload
       console.log('Recording started')
     }
 
     recorder.current.onstop = () => {
-      // biome-ignore lint/suspicious/noConsole: <explanation>
+      // biome-ignore lint/suspicious/noConsole: debug logging for audio upload
       console.log('Recording stopped')
     }
 
