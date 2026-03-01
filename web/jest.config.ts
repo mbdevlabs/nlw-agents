@@ -4,6 +4,8 @@ const config: Config = {
   testEnvironment: 'jsdom',
   setupFilesAfterEnv: ['<rootDir>/src/__tests__/setup.ts'],
   moduleNameMapper: {
+    '^\\.+/api$': '<rootDir>/src/__tests__/mocks/api.ts',
+    '^@/http/api$': '<rootDir>/src/__tests__/mocks/api.ts',
     '^@/(.*)$': '<rootDir>/src/$1',
     '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
   },
@@ -13,6 +15,7 @@ const config: Config = {
       {
         tsconfig: 'tsconfig.test.json',
         useESM: true,
+        diagnostics: false,
       },
     ],
   },
