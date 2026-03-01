@@ -1,13 +1,13 @@
-import { describe, it, expect, beforeEach, jest } from '@jest/globals'
-import Fastify from 'fastify'
+import { beforeEach, describe, expect, it, jest } from '@jest/globals'
 import type { FastifyInstance } from 'fastify'
+import Fastify from 'fastify'
 import {
   serializerCompiler,
   validatorCompiler,
 } from 'fastify-type-provider-zod'
 
 // Mock the database connection
-const mockReturning = jest.fn()
+const mockReturning = jest.fn<() => Promise<unknown>>()
 jest.unstable_mockModule('../../db/connections.ts', () => ({
   db: {
     insert: jest.fn().mockReturnThis(),

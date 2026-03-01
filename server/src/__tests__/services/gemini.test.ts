@@ -1,8 +1,8 @@
-import { describe, it, expect, beforeEach, jest } from '@jest/globals'
+import { beforeEach, describe, expect, it, jest } from '@jest/globals'
 
 // Mock GoogleGenAI before importing the module
-const mockGenerateContent = jest.fn()
-const mockEmbedContent = jest.fn()
+const mockGenerateContent = jest.fn<() => Promise<unknown>>()
+const mockEmbedContent = jest.fn<() => Promise<unknown>>()
 
 jest.unstable_mockModule('@google/genai', () => ({
   GoogleGenAI: jest.fn().mockImplementation(() => ({
@@ -25,7 +25,9 @@ describe('Gemini Service', () => {
 
   describe('transcribeAudio', () => {
     it('should transcribe audio successfully', async () => {
-      mockGenerateContent.mockResolvedValue({ text: 'Transcribed text in Portuguese.' })
+      mockGenerateContent.mockResolvedValue({
+        text: 'Transcribed text in Portuguese.',
+      })
 
       const result = await transcribeAudio('base64audiodata', 'audio/webm')
 
@@ -172,9 +174,9 @@ describe('Gemini Service', () => {
     it('should throw error when answer generation fails', async () => {
       mockGenerateContent.mockResolvedValue({ text: null })
 
-      await expect(
-        generateAnswer('question?', ['context'])
-      ).rejects.toThrow('Failed to generate answer')
+      await expect(generateAnswer('question?', ['context'])).rejects.toThrow(
+        'Failed to generate answer'
+      )
     })
 
     it('should handle empty context array', async () => {
@@ -188,13 +190,19 @@ describe('Gemini Service', () => {
     it('should join multiple transcriptions with newlines', async () => {
       mockGenerateContent.mockResolvedValue({ text: 'Combined answer' })
 
-      await generateAnswer('Question?', ['First part', 'Second part', 'Third part'])
+      await generateAnswer('Question?', [
+        'First part',
+        'Second part',
+        'Third part',
+      ])
 
       expect(mockGenerateContent).toHaveBeenCalledWith(
         expect.objectContaining({
           contents: [
             expect.objectContaining({
-              text: expect.stringContaining('First part\n\nSecond part\n\nThird part'),
+              text: expect.stringContaining(
+                'First part\n\nSecond part\n\nThird part'
+              ),
             }),
           ],
         })

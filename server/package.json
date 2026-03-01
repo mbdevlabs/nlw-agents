@@ -26,6 +26,7 @@
     "drizzle-seed": "^0.3.1",
     "jest": "^29.7.0",
     "ts-jest": "^29.2.5",
+    "ts-node": "^10.9.2",
     "typescript": "^5.8.3",
     "ultracite": "5.0.32"
   },

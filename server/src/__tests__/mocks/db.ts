@@ -2,7 +2,7 @@ import { jest } from '@jest/globals'
 
 // Chainable mock builder for Drizzle ORM queries
 export function createMockDb() {
-  const mockResult = jest.fn()
+  const mockResult = jest.fn<() => Promise<unknown>>()
 
   const chainableMock = {
     select: jest.fn().mockReturnThis(),

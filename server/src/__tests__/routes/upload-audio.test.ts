@@ -1,15 +1,15 @@
-import { describe, it, expect, beforeEach, jest } from '@jest/globals'
-import Fastify from 'fastify'
-import type { FastifyInstance } from 'fastify'
 import fastifyMultipart from '@fastify/multipart'
+import { beforeEach, describe, expect, it, jest } from '@jest/globals'
+import type { FastifyInstance } from 'fastify'
+import Fastify from 'fastify'
 import {
   serializerCompiler,
   validatorCompiler,
 } from 'fastify-type-provider-zod'
 
 // Mock Gemini service
-const mockTranscribeAudio = jest.fn<() => Promise<string>>()
-const mockGenerateEmbeddings = jest.fn<() => Promise<number[]>>()
+const mockTranscribeAudio = jest.fn<(base64: string, mimeType: string) => Promise<string>>()
+const mockGenerateEmbeddings = jest.fn<(text: string) => Promise<number[]>>()
 
 jest.unstable_mockModule('../../services/gemini.ts', () => ({
   transcribeAudio: mockTranscribeAudio,
@@ -17,7 +17,7 @@ jest.unstable_mockModule('../../services/gemini.ts', () => ({
 }))
 
 // Mock database
-const mockReturning = jest.fn()
+const mockReturning = jest.fn<() => Promise<unknown>>()
 
 jest.unstable_mockModule('../../db/connections.ts', () => ({
   db: {
@@ -69,7 +69,7 @@ describe('POST /rooms/:roomId/audio', () => {
     expect(response.statusCode).toBeDefined()
   })
 
-  it('should call transcribeAudio with correct parameters', async () => {
+  it('should call transcribeAudio with correct parameters', () => {
     // This test would require proper multipart form handling
     // For now, we verify the mock functions are set up correctly
     expect(mockTranscribeAudio).toBeDefined()

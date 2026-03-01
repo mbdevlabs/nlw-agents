@@ -6,7 +6,7 @@ process.env.DATABASE_URL = 'postgresql://test:test@localhost:5432/test'
 process.env.GEMINI_API_KEY = 'test-api-key'
 
 // Global timeout for async tests
-jest.setTimeout(10000)
+jest.setTimeout(10_000)
 
 // Clear all mocks before each test
 beforeEach(() => {

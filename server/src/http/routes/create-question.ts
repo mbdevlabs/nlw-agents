@@ -1,9 +1,9 @@
-import { and, eq, sql } from 'drizzle-orm';
-import type { FastifyPluginCallbackZod } from 'fastify-type-provider-zod';
-import z from 'zod/v4';
-import { db } from '../../db/connections.ts';
-import { schema } from '../../db/schema/index.ts';
-import { generateAnswer, generateEmbeddings } from '../../services/gemini.ts';
+import { and, eq, sql } from 'drizzle-orm'
+import type { FastifyPluginCallbackZod } from 'fastify-type-provider-zod'
+import z from 'zod/v4'
+import { db } from '../../db/connections.ts'
+import { schema } from '../../db/schema/index.ts'
+import { generateAnswer, generateEmbeddings } from '../../services/gemini.ts'
 
 export const createQuestionRoute: FastifyPluginCallbackZod = (app) => {
   app.post(
@@ -19,12 +19,12 @@ export const createQuestionRoute: FastifyPluginCallbackZod = (app) => {
       },
     },
     async (request, reply) => {
-      const { roomId } = request.params;
-      const { question } = request.body;
+      const { roomId } = request.params
+      const { question } = request.body
 
-      const embeddings = await generateEmbeddings(question);
+      const embeddings = await generateEmbeddings(question)
 
-      const embeddingsAsString = `[${embeddings.join(', ')}]`;
+      const embeddingsAsString = `[${embeddings.join(', ')}]`
 
       const chunks = await db
         .select({
@@ -42,13 +42,13 @@ export const createQuestionRoute: FastifyPluginCallbackZod = (app) => {
         .orderBy(
           sql`${schema.audioChunks.embeddings} <=> ${embeddingsAsString}::vector`
         )
-        .limit(3);
+        .limit(3)
 
-      let answer: string | null = null;
+      let answer: string | null = null
 
       if (chunks.length > 0) {
-        const chunkTranscriptions = chunks.map((chunk) => chunk.transcription);
-        answer = await generateAnswer(question, chunkTranscriptions);
+        const chunkTranscriptions = chunks.map((chunk) => chunk.transcription)
+        answer = await generateAnswer(question, chunkTranscriptions)
       }
 
       const result = await db
@@ -58,18 +58,18 @@ export const createQuestionRoute: FastifyPluginCallbackZod = (app) => {
           question,
           answer,
         })
-        .returning();
+        .returning()
 
-      const insertedQuestion = result[0];
+      const insertedQuestion = result[0]
 
       if (!insertedQuestion) {
-        throw new Error('Failed to create new room');
+        throw new Error('Failed to create new room')
       }
 
       return reply.status(201).send({
         questionId: insertedQuestion.id,
         answer,
-      });
+      })
     }
-  );
-};
+  )
+}
