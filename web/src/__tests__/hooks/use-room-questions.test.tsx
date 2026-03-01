@@ -50,7 +50,7 @@ describe('useRoomQuestions', () => {
 
     await waitFor(() =>
       expect(global.fetch).toHaveBeenCalledWith(
-        'http://127.0.0.1:3333/rooms/my-room-id/questions'
+        'http://localhost:3333/rooms/my-room-id/questions'
       )
     )
   })

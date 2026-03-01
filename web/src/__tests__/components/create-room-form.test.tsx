@@ -33,7 +33,9 @@ describe('CreateRoomForm', () => {
       </TestProviders>
     )
 
-    expect(screen.getByText('Criar sala')).toBeInTheDocument()
+    expect(
+      screen.getByText('Criar sala', { selector: '[data-slot="card-title"]' })
+    ).toBeInTheDocument()
     expect(
       screen.getByText(/crie uma nova sala para começar/i)
     ).toBeInTheDocument()
@@ -55,9 +57,7 @@ describe('CreateRoomForm', () => {
     await user.click(submitButton)
 
     await waitFor(() => {
-      expect(
-        screen.getByText(/pelo menos 3 caracteres/i)
-      ).toBeInTheDocument()
+      expect(screen.getByText(/pelo menos 3 caracteres/i)).toBeInTheDocument()
     })
   })
 

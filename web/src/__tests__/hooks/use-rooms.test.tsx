@@ -51,7 +51,7 @@ describe('useRooms', () => {
     })
 
     await waitFor(() =>
-      expect(global.fetch).toHaveBeenCalledWith('http://127.0.0.1:3333/rooms')
+      expect(global.fetch).toHaveBeenCalledWith('http://localhost:3333/rooms')
     )
   })
 

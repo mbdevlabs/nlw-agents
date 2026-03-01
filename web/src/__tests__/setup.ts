@@ -1,5 +1,8 @@
 import '@testing-library/jest-dom'
+import { TextDecoder, TextEncoder } from 'node:util'
 import { jest } from '@jest/globals'
+
+Object.assign(global, { TextEncoder, TextDecoder })
 
 // Mock global fetch
 global.fetch = jest.fn() as jest.MockedFunction<typeof fetch>
@@ -7,7 +10,7 @@ global.fetch = jest.fn() as jest.MockedFunction<typeof fetch>
 // Mock matchMedia for Tailwind CSS components
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
-  value: jest.fn().mockImplementation((query: string) => ({
+  value: jest.fn().mockImplementation((query: unknown) => ({
     matches: false,
     media: query,
     onchange: null,

@@ -33,9 +33,7 @@ describe('QuestionForm', () => {
     )
 
     expect(screen.getByText('Fazer uma Pergunta')).toBeInTheDocument()
-    expect(
-      screen.getByText(/digite sua pergunta abaixo/i)
-    ).toBeInTheDocument()
+    expect(screen.getByText(/digite sua pergunta abaixo/i)).toBeInTheDocument()
   })
 
   it('should show validation error for empty question', async () => {
@@ -67,9 +65,7 @@ describe('QuestionForm', () => {
     await user.click(screen.getByRole('button', { name: /enviar pergunta/i }))
 
     await waitFor(() => {
-      expect(
-        screen.getByText(/pelo menos 10 caracteres/i)
-      ).toBeInTheDocument()
+      expect(screen.getByText(/pelo menos 10 caracteres/i)).toBeInTheDocument()
     })
   })
 

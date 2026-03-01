@@ -24,7 +24,10 @@ describe('RoomList', () => {
 
   it('should show loading state initially', () => {
     ;(global.fetch as jest.Mock).mockImplementation(
-      () => new Promise(() => {})
+      () =>
+        new Promise(() => {
+          /* never resolves */
+        })
     )
 
     render(
@@ -91,7 +94,7 @@ describe('RoomList', () => {
     })
   })
 
-  it('should render card header with title and description', async () => {
+  it('should render card header with title and description', () => {
     ;(global.fetch as jest.Mock).mockResolvedValueOnce({
       ok: true,
       json: async () => [],
@@ -104,9 +107,7 @@ describe('RoomList', () => {
     )
 
     expect(screen.getByText('Salas recentes')).toBeInTheDocument()
-    expect(
-      screen.getByText(/acesso rápido às salas/i)
-    ).toBeInTheDocument()
+    expect(screen.getByText(/acesso rápido às salas/i)).toBeInTheDocument()
   })
 
   it('should show enter button for each room', async () => {

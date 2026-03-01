@@ -1,6 +1,6 @@
-import { renderHook, waitFor, act } from '@testing-library/react'
+import { act, renderHook, waitFor } from '@testing-library/react'
 import { useCreateRoom } from '@/http/use-create-room'
-import { TestQueryProvider, createTestQueryClient } from '../mocks/react-query'
+import { createTestQueryClient, TestQueryProvider } from '../mocks/react-query'
 
 describe('useCreateRoom', () => {
   beforeEach(() => {
@@ -19,14 +19,14 @@ describe('useCreateRoom', () => {
       wrapper: TestQueryProvider,
     })
 
-    await act(async () => {
-      await result.current.mutateAsync({
+    act(() => {
+      result.current.mutate({
         name: 'Test Room',
         description: 'Test Description',
       })
     })
 
-    expect(result.current.isSuccess).toBe(true)
+    await waitFor(() => expect(result.current.isSuccess).toBe(true))
     expect(result.current.data).toEqual(mockResponse)
   })
 
@@ -65,15 +65,11 @@ describe('useCreateRoom', () => {
       wrapper: TestQueryProvider,
     })
 
-    await act(async () => {
-      try {
-        await result.current.mutateAsync({ name: 'Test' })
-      } catch {
-        // Expected error
-      }
+    act(() => {
+      result.current.mutate({ name: 'Test' })
     })
 
-    expect(result.current.isError).toBe(true)
+    await waitFor(() => expect(result.current.isError).toBe(true))
   })
 
   it('should invalidate rooms query on success', async () => {
@@ -112,10 +108,10 @@ describe('useCreateRoom', () => {
       wrapper: TestQueryProvider,
     })
 
-    await act(async () => {
-      await result.current.mutateAsync({ name: 'Room Only Name' })
+    act(() => {
+      result.current.mutate({ name: 'Room Only Name' })
     })
 
-    expect(result.current.isSuccess).toBe(true)
+    await waitFor(() => expect(result.current.isSuccess).toBe(true))
   })
 })
